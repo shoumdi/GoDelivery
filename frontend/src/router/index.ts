@@ -35,9 +35,20 @@ const router = createRouter({
       component: () => import('../views/DashboardLivreur.vue'),
     },
     {
+
       path: '/notifications',
       name: 'notificationsView',
       component: () => import('../views/NotificationsView.vue'),
+    },
+    {
+      path: '/chat',
+      name: 'chatView',
+      component: () => import('../views/ChatView.vue'),
+    },
+    {
+      path: '/usermanager',
+      name: 'usermanager',
+      component: () => import('../views/UsersManager.vue'),
     },
   ],
 })

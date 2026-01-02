@@ -1,38 +1,80 @@
+<script setup lang="ts">
+import OrderCard from '@/components/OrderCard.vue';
+import StateCard from '@/components/StateCard.vue';
+import TopBar from '@/components/TopBar.vue';
+import { faBell, faComment, faHome, faListAlt, faTruck } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+const orders = [
+    {
+        id: 1,
+        reference: "Commande #001",
+        date: "2024-01-15",
+        status: "En attente",
+        description: "Colis fragile - Électronique",
+        address: "123 Rue Example, 75001 Paris",
+        tags: ["Fragile", "Express"],
+        offersCount: 3
+    },
+    {
+        id: 4,
+        reference: "Commande #004",
+        date: "2024-01-16",
+        status: "En attente",
+        description: "Livraison standard",
+        address: "456 Avenue Test, 69000 Lyon",
+        tags: ["Standard"],
+        offersCount: 1
+    },
+    {
+        id: 5,
+        reference: "Commande #005",
+        date: "2024-01-16",
+        status: "En attente",
+        description: "Colis volumineux",
+        address: "789 Boulevard Demo, 13000 Marseille",
+        tags: ["Volumineux"],
+        offersCount: 0
+    }
+];
+
+const statsData = [
+    {
+        label: "Commandes disponibles",
+        value: 8,
+        icon: "fa-list",
+        bgColor: "bg-blue-100",
+        iconColor: "text-blue-600"
+    },
+    {
+        label: "Mes offres",
+        value: 5,
+        icon: "fa-paper-plane",
+        bgColor: "bg-yellow-100",
+        iconColor: "text-yellow-600"
+    },
+    {
+        label: "En cours",
+        value: 2,
+        icon: "fa-truck",
+        bgColor: "bg-indigo-100",
+        iconColor: "text-indigo-600"
+    },
+    {
+        label: "Note moyenne",
+        value: 4.8 / 5,
+        icon: "fa-star",
+        bgColor: "bg-green-100",
+        iconColor: "text-green-600"
+    }
+];
+
+
+</script>
+
 <template>
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg fixed top-0 left-0 right-0 z-40">
-        <div class="px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <h1 class="text-2xl font-bold text-indigo-600">LivraisonApp</h1>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <div class="relative">
-                        <select id="dashboardSelector"
-                            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-sm">
-                            <option value="client">Dashboard Client</option>
-                            <option value="livreur" selected>Dashboard Livreur</option>
-                            <option value="admin">Dashboard Admin</option>
-                        </select>
-                    </div>
-                    <div class="relative">
-                        <button id="notificationBtn"
-                            class="relative p-2 text-gray-600 hover:text-indigo-600 transition">
-                            <i class="fas fa-bell text-xl"></i>
-                            <span id="notificationBadge"
-                                class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden">2</span>
-                        </button>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <a href="profil.html" class="text-gray-700 hover:text-indigo-600 transition">Martin Dubois</a>
-                        <button class="text-gray-600 hover:text-indigo-600 transition">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <TopBar title="LivraisonApp" />
 
     <div class="flex pt-16">
         <!-- Sidebar -->
@@ -40,35 +82,31 @@
             <nav class="p-4 space-y-2">
                 <a href="dashboard-livreur.html"
                     class="flex items-center space-x-3 px-4 py-3 bg-indigo-50 text-indigo-600 rounded-lg font-medium">
-                    <i class="fas fa-home"></i>
+                    <FontAwesomeIcon :icon="faHome" />
                     <span>Dashboard</span>
                 </a>
                 <a href="dashboard-livreur.html"
                     class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition">
-                    <i class="fas fa-list"></i>
+                    <FontAwesomeIcon :icon="faListAlt" />
                     <span>Commandes disponibles</span>
                 </a>
                 <a href="commandes-en-cours-livreur.html"
                     class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition">
-                    <i class="fas fa-truck"></i>
+                    <FontAwesomeIcon :icon="faTruck" />
                     <span>Mes commandes en cours</span>
                 </a>
                 <a href="historique-notifications.html"
                     class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition">
-                    <i class="fas fa-bell"></i>
+                    <FontAwesomeIcon :icon="faBell" />
                     <span>Notifications</span>
                     <span class="ml-auto bg-red-500 text-white text-xs rounded-full px-2 py-1">2</span>
                 </a>
                 <a href="chat.html"
                     class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition">
-                    <i class="fas fa-comments"></i>
+                    <FontAwesomeIcon :icon="faComment" />
                     <span>Messages</span>
                 </a>
-                <a href="profil.html"
-                    class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition">
-                    <i class="fas fa-user"></i>
-                    <span>Mon profil</span>
-                </a>
+
             </nav>
         </aside>
 
@@ -82,50 +120,7 @@
 
             <!-- Statistiques rapides -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white rounded-lg shadow p-6">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-600 text-sm">Commandes disponibles</p>
-                            <p class="text-2xl font-bold text-gray-800">8</p>
-                        </div>
-                        <div class="bg-blue-100 p-3 rounded-full">
-                            <i class="fas fa-list text-blue-600"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow p-6">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-600 text-sm">Mes offres</p>
-                            <p class="text-2xl font-bold text-gray-800">5</p>
-                        </div>
-                        <div class="bg-yellow-100 p-3 rounded-full">
-                            <i class="fas fa-paper-plane text-yellow-600"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow p-6">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-600 text-sm">En cours</p>
-                            <p class="text-2xl font-bold text-gray-800">2</p>
-                        </div>
-                        <div class="bg-indigo-100 p-3 rounded-full">
-                            <i class="fas fa-truck text-indigo-600"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow p-6">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-600 text-sm">Note moyenne</p>
-                            <p class="text-2xl font-bold text-gray-800">4.8/5</p>
-                        </div>
-                        <div class="bg-green-100 p-3 rounded-full">
-                            <i class="fas fa-star text-green-600"></i>
-                        </div>
-                    </div>
-                </div>
+                <StateCard v-for="stat in statsData" :title="stat.label" :value="stat.value" />
             </div>
 
             <!-- Filtres -->
@@ -148,120 +143,9 @@
 
             <!-- Liste des commandes -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Carte commande -->
-                <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-6">
-                    <div class="flex justify-between items-start mb-4">
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-800">Commande #001</h3>
-                            <p class="text-sm text-gray-600">15/01/2024</p>
-                        </div>
-                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">
-                            En attente
-                        </span>
-                    </div>
-                    <div class="mb-4">
-                        <p class="text-gray-700 mb-2"><strong>Description:</strong></p>
-                        <p class="text-sm text-gray-600">Colis fragile - Électronique</p>
-                    </div>
-                    <div class="mb-4">
-                        <p class="text-gray-700 mb-2"><strong>Adresse:</strong></p>
-                        <p class="text-sm text-gray-600">123 Rue Example, 75001 Paris</p>
-                    </div>
-                    <div class="mb-4">
-                        <span class="px-2 py-1 bg-red-100 text-red-800 rounded text-xs">Fragile</span>
-                        <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs ml-2">Express</span>
-                    </div>
-                    <div class="mb-4 p-3 bg-gray-50 rounded">
-                        <p class="text-xs text-gray-600 mb-1">Offres reçues:</p>
-                        <p class="text-sm font-semibold text-gray-800">3 offres (prix masqués)</p>
-                    </div>
-                    <div class="flex space-x-2">
-                        <a href="commande-livreur-detail.html?id=1"
-                            class="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition text-center">
-                            Voir détails
-                        </a>
-                        <button
-                            class="px-4 py-2 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Carte commande -->
-                <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-6">
-                    <div class="flex justify-between items-start mb-4">
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-800">Commande #004</h3>
-                            <p class="text-sm text-gray-600">16/01/2024</p>
-                        </div>
-                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">
-                            En attente
-                        </span>
-                    </div>
-                    <div class="mb-4">
-                        <p class="text-gray-700 mb-2"><strong>Description:</strong></p>
-                        <p class="text-sm text-gray-600">Livraison standard</p>
-                    </div>
-                    <div class="mb-4">
-                        <p class="text-gray-700 mb-2"><strong>Adresse:</strong></p>
-                        <p class="text-sm text-gray-600">456 Avenue Test, 69000 Lyon</p>
-                    </div>
-                    <div class="mb-4">
-                        <span class="px-2 py-1 bg-gray-100 text-gray-800 rounded text-xs">Standard</span>
-                    </div>
-                    <div class="mb-4 p-3 bg-gray-50 rounded">
-                        <p class="text-xs text-gray-600 mb-1">Offres reçues:</p>
-                        <p class="text-sm font-semibold text-gray-800">1 offre (prix masqué)</p>
-                    </div>
-                    <div class="flex space-x-2">
-                        <a href="commande-livreur-detail.html?id=4"
-                            class="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition text-center">
-                            Voir détails
-                        </a>
-                        <button
-                            class="px-4 py-2 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Carte commande -->
-                <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-6">
-                    <div class="flex justify-between items-start mb-4">
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-800">Commande #005</h3>
-                            <p class="text-sm text-gray-600">16/01/2024</p>
-                        </div>
-                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">
-                            En attente
-                        </span>
-                    </div>
-                    <div class="mb-4">
-                        <p class="text-gray-700 mb-2"><strong>Description:</strong></p>
-                        <p class="text-sm text-gray-600">Colis volumineux</p>
-                    </div>
-                    <div class="mb-4">
-                        <p class="text-gray-700 mb-2"><strong>Adresse:</strong></p>
-                        <p class="text-sm text-gray-600">789 Boulevard Demo, 13000 Marseille</p>
-                    </div>
-                    <div class="mb-4">
-                        <span class="px-2 py-1 bg-purple-100 text-purple-800 rounded text-xs">Volumineux</span>
-                    </div>
-                    <div class="mb-4 p-3 bg-gray-50 rounded">
-                        <p class="text-xs text-gray-600 mb-1">Offres reçues:</p>
-                        <p class="text-sm font-semibold text-gray-800">Aucune offre</p>
-                    </div>
-                    <div class="flex space-x-2">
-                        <a href="commande-livreur-detail.html?id=5"
-                            class="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition text-center">
-                            Voir détails
-                        </a>
-                        <button
-                            class="px-4 py-2 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
-                </div>
+                <OrderCard v-for="order in orders" :reference="order.reference" :date="order.date"
+                    :status="order.status" :description="order.description" :adress="order.address"
+                    :offers-count="order.offersCount" :options="order.tags" />
             </div>
         </main>
     </div>

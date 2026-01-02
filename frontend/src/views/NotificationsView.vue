@@ -1,41 +1,11 @@
+<script setup lang="ts">
+import TopBar from '@/components/TopBar.vue';
+
+</script>
+
 <template>
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <a href="dashboard-client.html" class="text-indigo-600 hover:text-indigo-800 mr-4">
-                        <i class="fas fa-arrow-left"></i>
-                    </a>
-                    <h1 class="text-2xl font-bold text-indigo-600">LivraisonApp</h1>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <div class="relative">
-                        <select id="dashboardSelector"
-                            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-sm">
-                            <option value="client">Dashboard Client</option>
-                            <option value="livreur">Dashboard Livreur</option>
-                            <option value="admin">Dashboard Admin</option>
-                        </select>
-                    </div>
-                    <div class="relative">
-                        <button id="notificationBtn"
-                            class="relative p-2 text-gray-600 hover:text-indigo-600 transition">
-                            <i class="fas fa-bell text-xl"></i>
-                            <span id="notificationBadge"
-                                class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
-                        </button>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <span class="text-gray-700">Jean Dupont</span>
-                        <button class="text-gray-600 hover:text-indigo-600 transition">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <TopBar />
 
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="mb-8">
