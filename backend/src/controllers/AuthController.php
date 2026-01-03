@@ -2,6 +2,7 @@
 namespace APP\Controllers;
 
 use APP\Services\AuthService;
+use Core\Request;
 
 class AuthController extends Controller{
 
@@ -13,7 +14,7 @@ class AuthController extends Controller{
     }
 
     function register(){
-        
+        $data = Request::getParsedBody();
     }
 
     function login(){

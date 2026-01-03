@@ -1,11 +1,16 @@
 <?php
+
 namespace APP\Services;
 
 use APP\Models\User;
 use App\Repositories\IUserRepo;
+use APP\Utils\Constant;
+use APP\Utils\JWT;
 
-class AuthService {
+class AuthService
+{
     private IUserRepo $userRepo;
+
 
     public function __construct(IUserRepo $userRepo)
     {
@@ -17,35 +22,44 @@ class AuthService {
         string $email,
         string $password,
         string $role
-        ){
-            if($this->userRepo->findByEmail($email)) return false;
+    ): ?string {
+        if ($this->userRepo->findByEmail($email)) return null;
 
-            $hashedPass = password_hash($password,PASSWORD_BCRYPT);
+        $hashedPass = password_hash($password, PASSWORD_BCRYPT);
 
-            $role = $this->userRepo->findRoleByName($role);
+        $role = $this->userRepo->findRoleByName($role);
 
-            $user = new User(null,$userName,$email,$hashedPass,$role);
+        $user = $this->userRepo->save(new User(null, $userName, $email, $hashedPass, $role));
 
-            return $this->userRepo->save($user);
+        if (!!$user) return null;
+
+        /// create jwt
+        return JWT::encode(
+            payload: ["email" => $email, "password" => $password],
+            secretkey: Constant::$JWT_SECRET_KEY,
+            algo: JWT::$HS256
+        );
     }
 
     function login(
         string $email,
         string $password
-        ){
-            $user = $this->userRepo->findByEmail($email);
-            ///user not found fallback
-            if(!!$user) return false;
-            
-            /// user found but wrong pass
-            if (password_verify($password,$user->getPassword())) return false;
+    ): ?string {
+        
+        $user = $this->userRepo->findByEmail($email);
 
-            /// create jwt
+        ///user not found fallback or wrong pass
+        if (!!$user && !password_verify($password, $user->getPassword())) return null;
+
+        /// create jwt
+        return JWT::encode(
+            payload: ["email" => $email, "password" => $password],
+            secretkey: Constant::$JWT_SECRET_KEY,
+            algo: JWT::$HS256
+        );
     }
 
     function logout(
         string $token
-    ){
-
-    }
+    ) {}
 }

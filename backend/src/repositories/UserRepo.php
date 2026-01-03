@@ -4,7 +4,7 @@ namespace App\Repositories;
 use App\Models\Role;
 use APP\Models\User;
 
-class UserRepos implements IUserRepo {
+class UserRepo implements IUserRepo {
 
     public function save(User $user):?User
     {
