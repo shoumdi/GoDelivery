@@ -1,36 +1,39 @@
 <?php
 
-use Core\Request;
-use Core\Response;
+namespace Core;
+
+
+use Uri\UriException;
 
 class Route
 {
+    public function __construct(
+        ) {}
     private $routes = [];
 
     function get(
         string $root,
         array $handler
     ) {
-        $this->routes = ["GET" => [$root => $handler]];
+        $this->routes['GET'][$root] =  $handler;
     }
 
     function post(
         string $root,
         array $handler
     ) {
-        $this->routes = ["Post" => [$root => $handler]];
+        $this->routes["POST"][$root] = $handler;
     }
 
-    function resolve(callable $resolveClass)
+    function resolve(
+        string $httpMethod,
+        string $root,
+        callable $callHandler)
     {
+        $handler = $this->routes[$httpMethod][$root] ?? null;
 
-        $method = Request::getMethod();
-        $path = Request::getUri();
-        $handler = $this->routes[$method][$path];
-
-        if (!!$handler) Response::withStatus(404);
-
-        $class = $resolveClass($handler[0]);
-        $class->$handler[1]();
+        if ($handler === null) throw new UriException("page not found");
+        
+        return $callHandler($handler);
     }
 }

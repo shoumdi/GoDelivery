@@ -1,12 +1,21 @@
 <?php
 
-use App\App;
+use Core\App;
+use Core\Container;
+use Core\Route;
+
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+
 
 
 $route = new Route();
-include_once './routes/web.php';
+$container = new Container();
+require dirname(__DIR__) . '/routes/web.php';
+require dirname(__DIR__) . '/bootstrap/container.php';
 $app = App::create()
     ->setRouter($route)
+    ->setContainer($container)
     ->build();
 
 $app->run();
